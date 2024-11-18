@@ -101,6 +101,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  //1번문제
   while (1)
   {
   	static int angle = 0;
