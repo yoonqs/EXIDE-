@@ -64,7 +64,16 @@ int _write(int file, char *p, int len) {
 	HAL_UART_Transmit(&huart2, p, len, 10);
 	return len;
 }
-
+//1ms마다 호출됨
+uint8_t stateSwitch; //스위치의 상태
+void Systick_callback() {
+	static uint32_t stateSwitchBuffer;
+	stateSwitchBuffer <<= 1;
+	stateSwitchBuffer |= HAL_GPIO_ReadPin(SW_GPIO_Port, SW_Pin);  //현재스위치상태
+	//스위치 판단
+	if(stateSwitchBuffer == 0xffffffff) stateSwitch = 1;
+	else if(stateSwitch == 0x00000000) stateSwitch = 0;
+}
 /**
   * @brief  The application entry point.
   * @retval int
@@ -108,10 +117,11 @@ int main(void)
   	static int stateSW,    //current switch state
 		           oldStateSW; //old switch state
   	static int stateSin = 1;
+
   	angle++;
   	angle %=360;
   	float sinValue =sin(angle *M_PI/180);
-  	stateSW = HAL_GPIO_ReadPin(SW_GPIO_Port, SW_Pin); //get current state
+  	stateSW = stateSwitch; //get current state
   	if(stateSW != oldStateSW) {
   		if(stateSW == 0) {
   			//현재눌림
