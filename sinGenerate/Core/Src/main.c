@@ -101,15 +101,30 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  //1번문제
+  //2번문제 (사인파를  그래프로 표시한다. Blue버튼을 클릭하면 그래프가 멈춘다. 버튼을 다시 클릭하면 그래프가 표시된다.)
   while (1)
   {
   	static int angle = 0;
+  	static int stateSW,    //current switch state
+		           oldStateSW; //old switch state
+  	static int stateSin = 1;
   	angle++;
   	angle %=360;
   	float sinValue =sin(angle *M_PI/180);
-  	if(HAL_GPIO_ReadPin(SW_GPIO_Port, SW_Pin)==1)
-  	printf("%f\n",sinValue);
+  	stateSW = HAL_GPIO_ReadPin(SW_GPIO_Port, SW_Pin); //get current state
+  	if(stateSW != oldStateSW) {
+  		if(stateSW == 0) {
+  			//현재눌림
+  			stateSin ^= 1;  //^->현재상태를 반전시킴
+  		}
+  		else if(stateSW == 1) {
+  			//현재해지
+  			//no action
+  		}
+  	}
+  		if(stateSin)
+  			printf("%f\n",sinValue);
+  	oldStateSW = stateSW;  //backup state of switch
   	HAL_Delay(10);
 
     /* USER CODE END WHILE */
