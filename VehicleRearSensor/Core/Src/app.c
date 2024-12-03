@@ -28,13 +28,13 @@ void app() {
 	  //measure distance 거리측정
 		if (cycleDistance == 0) {
 			cycleDistance = 100;
-			distance2 = getDistance();
+			distance = getDistance();
 			//judgement distance
-		if(distance2 > 20) periodOn = 1000 / 2;
-		  else if((distance2 <= 20) && (distance2 > 15)) periodOn = 800 / 2;
-		  else if((distance2 <= 15) && (distance2 > 10)) periodOn = 600 / 2;
-		  else if((distance2 <= 10) && (distance2 > 5)) periodOn = 400 / 2;
-		  else if(distance2 <= 5) periodOn = 0;
+		if(distance > 20) periodOn = 1000 / 2;
+		  else if((distance <= 20) && (distance > 15)) periodOn = 800 / 2;
+		  else if((distance <= 15) && (distance > 10)) periodOn = 600 / 2;
+		  else if((distance <= 10) && (distance > 5)) periodOn = 400 / 2;
+		  else if(distance <= 5) periodOn = 0;
 		}
 		//generate sound 소리발생
 		if(cycleSound == 0) {

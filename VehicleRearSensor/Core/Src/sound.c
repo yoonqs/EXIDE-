@@ -10,7 +10,7 @@
 extern TIM_HandleTypeDef htim1;
 
 void initSound() {
-	HAL_TIM_PMW_Start(&htim1, TIM_CHANNEL_1);
+	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
 	htim1.Instance->CCR1 = 0;
 }
 
